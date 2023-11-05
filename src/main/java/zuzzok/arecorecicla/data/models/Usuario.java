@@ -12,6 +12,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,15 +26,23 @@ import lombok.Setter;
 @Table(name = "usuario")
 public class Usuario extends BaseEntity {
 
+  @Size(min = 2, max = 200, message = "La longitud del nombre es mayor o menor al permitido.")
+  @NotEmpty(message = "Por favor ingresa tu nombre.")
   @Column(name = "nombre", nullable = false)
   private String nombre;
 
+  @Size(min = 2, max = 200, message = "La longitud del apellido es mayor o menor al permitido.")
+  @NotEmpty(message = "Por favor ingresa tu apellido.")
   @Column(name = "apellido", nullable = false)
   private String apellido;
 
+  @NotEmpty(message = "Por favor ingresa tu correo.")
+  @Email(message = "El correo no es valido.")
   @Column(name = "email", nullable = false, unique = true)
   private String email;
 
+  @Size(min = 4, max = 200, message = "La longitud de la contraseña es mayor o menor al permitido.")
+  @NotEmpty(message = "Por favor ingresa una contraseña.")
   @Column(name = "clave", nullable = false, unique = true)
   private String clave;
 
@@ -42,13 +53,13 @@ public class Usuario extends BaseEntity {
   @JoinTable(name = "rol_de_usuario", joinColumns = {
       @JoinColumn(name = "usuario_id")
   }, inverseJoinColumns = {
-      @JoinColumn(name = "rol_id")
+      @JoinColumn(name = "rol_id", nullable = false)
   })
   private Set<Rol> roles;
 
   /* relacion muchos a uno entre usuario y genero */
   @ManyToOne
-  @JoinColumn(name = "genero_id", nullable = false)
+  @JoinColumn(name = "genero_id")
   private Genero genero;
 
   /*
