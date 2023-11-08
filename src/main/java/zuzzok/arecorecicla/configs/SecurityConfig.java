@@ -31,6 +31,7 @@ public class SecurityConfig {
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers(toH2Console()).permitAll();
           authorize.requestMatchers(
+              new AntPathRequestMatcher("/favicon.ico"),
               new AntPathRequestMatcher("/css/**"),
               new AntPathRequestMatcher("/js/**"),
               new AntPathRequestMatcher("/assets/**"),
@@ -45,9 +46,11 @@ public class SecurityConfig {
         .formLogin((login) -> {
           login.permitAll();
           login.loginPage("/login");
+          login.defaultSuccessUrl("/");
         })
         .logout((logout) -> {
           logout.permitAll();
+          logout.logoutSuccessUrl("/");
         })
         .build();
   }
