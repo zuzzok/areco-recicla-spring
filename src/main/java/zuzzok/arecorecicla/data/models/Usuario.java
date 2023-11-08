@@ -46,6 +46,9 @@ public class Usuario extends BaseEntity {
   @Column(name = "clave", nullable = false, unique = true)
   private String clave;
 
+  @Column(name = "balance", columnDefinition = "Decimal(15,2) default '0'")
+  private float balance;
+
   /*
    * Muchos a Muchos entre usuario y rol
    */
