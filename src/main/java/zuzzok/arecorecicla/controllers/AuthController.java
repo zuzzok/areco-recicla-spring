@@ -64,7 +64,7 @@ public class AuthController {
     usuario.setRoles(Set.of(roles.get(0)));
     service.save(usuario);
 
-    return "redirect:/auth/login";
+    return "redirect:/login";
   }
 
 }
