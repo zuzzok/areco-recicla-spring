@@ -1,6 +1,6 @@
 package zuzzok.arecorecicla.data.models;
 
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +21,6 @@ public class Genero extends BaseEntity {
   private String nombre;
 
   @OneToMany(mappedBy = "genero")
-  private Set<Usuario> usuario;
+  private List<Usuario> usuario;
 
 }

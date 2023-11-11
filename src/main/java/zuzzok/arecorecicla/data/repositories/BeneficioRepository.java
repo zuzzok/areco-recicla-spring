@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import zuzzok.arecorecicla.data.models.Beneficio;
 
-public interface BeneficioRepository extends JpaRepository<Beneficio, Integer> {
+public interface BeneficioRepository extends JpaRepository<Beneficio, Long> {
 
 }

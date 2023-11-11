@@ -1,6 +1,7 @@
 
 package zuzzok.arecorecicla.data.models;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -69,12 +70,12 @@ public class Usuario extends BaseEntity {
    * Uno a muchos entre usuario y reciclable.
    */
   @OneToMany(mappedBy = "usuario")
-  private Set<Reciclable> reciclables;
+  private List<Reciclable> reciclables;
 
   @OneToMany(mappedBy = "usuario")
-  private Set<Punto> puntos;
+  private List<Punto> puntos;
 
   @OneToMany(mappedBy = "usuario")
-  private Set<Cupon> cupones;
+  private List<Cupon> cupones;
 
 }

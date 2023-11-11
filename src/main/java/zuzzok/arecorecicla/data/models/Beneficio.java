@@ -1,7 +1,7 @@
 package zuzzok.arecorecicla.data.models;
 
-import java.util.Date;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,15 +29,18 @@ public class Beneficio extends BaseEntity {
   @Column(name = "costo", nullable = false)
   private Integer costo;
 
-  @Column(name = "creado", nullable = false)
+  @Column(name = "creado", nullable = false, columnDefinition = "date default now()")
   @Temporal(TemporalType.DATE)
-  private Date creado;
+  private LocalDate creado;
 
   @Column(name = "expira", nullable = true)
   @Temporal(TemporalType.DATE)
-  private Date expira;
+  private LocalDate expira;
 
   @OneToMany(mappedBy = "beneficio")
-  private Set<Cupon> cupones;
+  private List<Cupon> cupones;
+
+  @OneToMany(mappedBy = "beneficio")
+  private List<Punto> puntos;
 
 }

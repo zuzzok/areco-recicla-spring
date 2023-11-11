@@ -1,11 +1,12 @@
 package zuzzok.arecorecicla.data.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -20,16 +21,26 @@ import lombok.Setter;
 @Table(name = "punto")
 public class Punto extends BaseEntity {
 
-    @Column(name = "creado", nullable = false)
+    @Column(name = "creado", nullable = false, columnDefinition = "date default now()")
     @Temporal(TemporalType.DATE)
-    private Date creado;
-    @Column(name = "cantidad", nullable = false)
-    private Integer cantidad;
+    private LocalDate creado;
+
+    @Column(name = "cantidad", nullable = false, columnDefinition = "Decimal(15,2)")
+    private float cantidad;
+
     @Column(name = "descripcion", nullable = true)
     private String descripcion;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    @OneToOne
+    @JoinColumn(name = "reciclable_id", nullable = true)
+    private Reciclable reciclable;
+
+    @ManyToOne
+    @JoinColumn(name = "beneficio_id", nullable = true)
+    private Beneficio beneficio;
 
 }

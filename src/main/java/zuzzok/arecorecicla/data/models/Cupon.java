@@ -1,7 +1,7 @@
 
 package zuzzok.arecorecicla.data.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,12 +21,12 @@ import lombok.Setter;
 @Table(name = "cupon")
 public class Cupon extends BaseEntity {
 
-  @Column(name = "valido", nullable = false)
+  @Column(name = "valido", nullable = false, columnDefinition = "boolean default true")
   private boolean valido;
 
-  @Column(name = "creado", nullable = false)
+  @Column(name = "creado", nullable = false, columnDefinition = "date default now()")
   @Temporal(TemporalType.DATE)
-  private Date creado;
+  private LocalDate creado;
 
   @ManyToOne
   @JoinColumn(name = "usuario_id", nullable = false)
