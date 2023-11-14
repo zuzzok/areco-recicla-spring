@@ -34,8 +34,8 @@ public class SecurityConfig {
               new AntPathRequestMatcher("/favicon.ico"),
               new AntPathRequestMatcher("/css/**"),
               new AntPathRequestMatcher("/js/**"),
-              new AntPathRequestMatcher("/assets/**"),
-              new AntPathRequestMatcher("/vendors/**"),
+              new AntPathRequestMatcher("/img/**"),
+              new AntPathRequestMatcher("/fonts/**"),
               new AntPathRequestMatcher("/login"),
               new AntPathRequestMatcher("/register")).permitAll();
           authorize.anyRequest().authenticated();
@@ -46,7 +46,7 @@ public class SecurityConfig {
         .formLogin((login) -> {
           login.permitAll();
           login.loginPage("/login");
-          login.defaultSuccessUrl("/");
+          login.defaultSuccessUrl("/dashboard");
         })
         .logout((logout) -> {
           logout.permitAll();

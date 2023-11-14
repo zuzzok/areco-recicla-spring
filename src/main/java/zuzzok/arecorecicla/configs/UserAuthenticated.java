@@ -11,17 +11,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Getter;
 import zuzzok.arecorecicla.data.models.Usuario;
 
+@Getter
 public class UserAuthenticated implements UserDetails {
 
-  @Getter
+  private Long id;
   private String nombre;
-  @Getter
   private String apellido;
   private String email;
   private String clave;
   private List<GrantedAuthority> authorities;
 
   public UserAuthenticated(Usuario usuario) {
+    this.id = usuario.getId();
     this.nombre = usuario.getNombre();
     this.apellido = usuario.getApellido();
     this.email = usuario.getEmail();

@@ -1,0 +1,51 @@
+<!--
+=========================================================
+* Argon Dashboard 2 - v2.0.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en" th:fragment="slots(title, content, script)">
+
+<head>
+  <fragment th:replace="~{fragments/metadata}"></fragment>
+  <title th:replace="${title}">Areco Recicla | Dashboard</title>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <div class="min-height-300 bg-success position-absolute w-100"></div>
+
+  <aside th:replace="~{fragments/navigation :: aside-nav}">
+    <!-- Aside Navigation Fragment -->
+  </aside>
+
+  <main class="main-content position-relative border-radius-lg ">
+    <nav th:replace="~{fragments/navigation :: nav}">
+      <!-- Navigation Fragment -->
+    </nav>
+
+    <slot th:replace="${content} ?: ~{}">
+      <!-- Main Content Slot -->
+    </slot>
+
+    <footer th:replace="~{fragments/footer :: footer}">
+      <!-- Footer Fragment -->
+    </footer>
+  </main>
+
+  <!-- Page Scripts -->
+  <script th:src="@{/js/plugins/chartjs.min.js}"></script>
+  <scripts th:replace="~{fragments/scripts}"></scripts>
+  <script th:replace="${script} ?: ~{}"></script>
+
+</body>
+
+</html>

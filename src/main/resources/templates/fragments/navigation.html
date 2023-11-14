@@ -6,28 +6,29 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" th:href="@{/}" target="_blank">
-        <!-- <img src="./assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo"> -->
-        <span class="ms-1 fw-bold fs-4">Areco Recicla</span>
+      <a class="navbar-brand m-0 p-1 d-flex justify-content-center align-items-center h-100" th:href="@{/}"
+        target="_blank">
+        <img th:src="@{/img/logo.png}" class="img-fluid h-100" alt="main_logo">
+        <!-- <span class="ms-1 fw-bold fs-4">Areco Recicla</span> -->
       </a>
     </div>
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse w-fit" id="sidenav-collapse-main">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav gap-1">
         <li class="nav-item">
-          <a class="nav-link active" th:href="@{/}">
+          <a class="nav-link active" th:href="@{/dashboard}">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-regular fa-home text-success text-sm opacity-10"></i>
+              <i class="fas fa-regular fa-home text-success text-sm opacity-10 pb-1"></i>
             </div>
             <span class="nav-link-text ms-1">Inicio</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/dashboard}">
+          <a class="nav-link" th:href="@{/dashboard/benefits}">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-regular fa-tags text-success text-sm opacity-10"></i>
+              <i class="fas fa-gifts text-success text-sm opacity-10 pb-1"></i>
             </div>
             <span class="nav-link-text ms-1">Beneficios</span>
           </a>
@@ -43,23 +44,15 @@
     data-scroll="false">
     <div class="container-fluid py-1 px-3">
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6">
           <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
           <li class="breadcrumb-item text-sm text-white active" aria-current="page">Inicio</li>
         </ol>
         <h6 class="font-weight-bolder text-white mb-0">Inicio</h6>
       </nav>
-      <div class="collapse navbar-collapse me-md-0 me-sm-4 justify-content-end align-items-center" id=" navbar">
-        <ul class="navbar-nav justify-content-end">
-          <li class="nav-item d-flex align-items-center">
-            <a th:href="@{logout}" class="nav-link text-white font-weight-bold px-0">
-              <button class="btn btn-xs btn-outline-light mb-0">
-                <i class="fas fa-sign-out-alt me-sm-1"></i>
-                <span class="d-sm-inline d-none">Cerrar Sesión</span>
-              </button>
-            </a>
-          </li>
-          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+      <div class="collapse navbar-collapse me-md-0 me-sm-4 justify-content-end align-items-center" id="navbar">
+        <ul class="navbar-nav justify-content-end gap-2">
+          <li class="nav-item d-xl-none ps-1 d-flex align-items-center">
             <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
               <div class="sidenav-toggler-inner">
                 <i class="sidenav-toggler-line bg-white"></i>
@@ -68,7 +61,61 @@
               </div>
             </a>
           </li>
+          <li class="nav-item ps-1 d-flex align-items-center">
+            <span class="badge bg-white text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom"
+              title="Puntos Actuales">
+              <span th:text=" ${#numbers.formatDecimal(balance, 1, 2)}"></span> <i class="fas fa-wallet ps-1"></i>
+            </span>
+          </li>
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center text-white p-0" href="#"
+              id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img
+                th:src="@{${'https://source.boringavatars.com/marble/120/' + email + '?colors=45936C,334f53,45936c,9acc77,e5ead4'}}"
+                class="rounded-circle border border-2 border-white" height="42" alt="Avatar" loading="lazy" />
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item d-flex gap-2 align-items-center" data-bs-toggle="modal"
+                  data-bs-target="#userQrModal">
+                  <i class="fas fa-qrcode"></i> Mi QR
+                </a>
+              </li>
+              <li>
+                <hr class="horizontal mx-3 my-1 dark">
+              </li>
+              <li>
+                <a class="dropdown-item d-flex gap-2 align-items-center " th:href="@{logout}">
+                  <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
       </div>
     </div>
   </nav>
+  <!-- User QR Modal -->
+  <div class="modal fade" id="userQrModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tu Codigo Personal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn bg-gradient-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </th:block>
