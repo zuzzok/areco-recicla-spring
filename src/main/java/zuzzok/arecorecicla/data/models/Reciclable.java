@@ -2,6 +2,9 @@ package zuzzok.arecorecicla.data.models;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -27,8 +30,9 @@ public class Reciclable extends BaseEntity {
   @Column(name = "kilogramos", nullable = false)
   private float kilogramos;
 
-  @Column(name = "creado", nullable = false, columnDefinition = "date default now()")
+  @Column(name = "creado", nullable = false, updatable = false)
   @Temporal(TemporalType.DATE)
+  @CreationTimestamp(source = SourceType.DB)
   private LocalDate creado;
 
   @ManyToOne
@@ -36,7 +40,7 @@ public class Reciclable extends BaseEntity {
   private Usuario usuario;
 
   @ManyToOne
-  @JoinColumn(name = "ecopunto_id", nullable = false)
+  @JoinColumn(name = "ecopunto_id", nullable = true)
   private Ecopunto ecopunto;
 
   @OneToOne(mappedBy = "reciclable")

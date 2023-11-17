@@ -44,7 +44,7 @@ public class Usuario extends BaseEntity {
 
   @Size(min = 4, max = 200, message = "La longitud de la contraseña es mayor o menor al permitido.")
   @NotEmpty(message = "Por favor ingresa una contraseña.")
-  @Column(name = "clave", nullable = false, unique = true)
+  @Column(name = "clave", nullable = false)
   private String clave;
 
   @Column(name = "balance", columnDefinition = "Decimal(15,2) default '0'")

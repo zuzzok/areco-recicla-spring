@@ -3,6 +3,9 @@ package zuzzok.arecorecicla.data.models;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -29,8 +32,9 @@ public class Beneficio extends BaseEntity {
   @Column(name = "costo", nullable = false)
   private Integer costo;
 
-  @Column(name = "creado", nullable = false, columnDefinition = "date default now()")
+  @Column(name = "creado", nullable = false, updatable = false)
   @Temporal(TemporalType.DATE)
+  @CreationTimestamp(source = SourceType.DB)
   private LocalDate creado;
 
   @Column(name = "expira", nullable = true)
