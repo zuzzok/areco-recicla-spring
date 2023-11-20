@@ -8,6 +8,8 @@ import org.hibernate.annotations.SourceType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -29,8 +31,11 @@ public class Beneficio extends BaseEntity {
   @Column(name = "descripcion", nullable = false)
   private String descripcion;
 
-  @Column(name = "costo", nullable = false)
-  private Integer costo;
+  @Column(name = "costo", nullable = false, columnDefinition = "Decimal(15,2)")
+  private float costo;
+
+  @Column(name = "imagen", nullable = false)
+  private String imagen;
 
   @Column(name = "creado", nullable = false, updatable = false)
   @Temporal(TemporalType.DATE)
@@ -46,5 +51,9 @@ public class Beneficio extends BaseEntity {
 
   @OneToMany(mappedBy = "beneficio")
   private List<Punto> puntos;
+
+  @ManyToOne
+  @JoinColumn(name = "categoria_id", nullable = false)
+  private CategoriaBeneficio categoriaBeneficio;
 
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <fragment th:replace="~{fragments/metadata}"></fragment>
+  <title>Areco Recicla | 500</title>
+</head>
+
+<body>
+  <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <h1 class="display-3 me-4">403</h1>
+            <div>
+              <h4 class="pt-3">¡Ops, no estas autorizado!</h4>
+              <p class="text-medium-emphasis">No tienes los privilegios para acceder a esta página.</p>
+            </div>
+          </div>
+          <div class="col-md-12 d-flex justify-content-center">
+            <a th:href=" @{/dashboard}" class="w-90">
+              <button class="btn btn-block btn-success w-100" type="button">Volver al Dashboard</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

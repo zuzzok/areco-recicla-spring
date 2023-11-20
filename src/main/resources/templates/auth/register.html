@@ -44,7 +44,7 @@
             </div> -->
             <div class="row px-sm-4 px-3">
               <div class="card-body">
-                <form role="form" th:action="@{register}" th:object="${usuario}" method="post">
+                <form role="form" th:action="@{/register}" th:object="${usuario}" method="post">
                   <div class="mb-3">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" th:errorclass="is-invalid" th:field="*{nombre}" id="nombre"
@@ -84,7 +84,7 @@
                   <div class="text-center">
                     <button type="submit" class="btn bg-success text-white w-100 my-4 mb-2">Registrarse</button>
                   </div>
-                  <p class="text-sm text-center mt-3 mb-0">¿Ya tienes una cuenta? <a th:href="@{login}"
+                  <p class="text-sm text-center mt-3 mb-0">¿Ya tienes una cuenta? <a th:href="@{/login}"
                       class="text-success font-weight-bolder">Ingresa</a></p>
                 </form>
               </div>

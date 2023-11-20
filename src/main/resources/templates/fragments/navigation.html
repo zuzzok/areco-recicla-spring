@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse w-fit" id="sidenav-collapse-main">
       <ul class="navbar-nav gap-1">
         <li class="nav-item">
-          <a class="nav-link active" th:href="@{/dashboard}">
+          <a class="nav-link" th:href="@{/dashboard}" th:classappend="${requestURI == '/dashboard' ? 'active' : ''}">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-regular fa-home text-success text-sm opacity-10 pb-1"></i>
@@ -25,12 +25,33 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/dashboard/benefits}">
+          <a class="nav-link" th:href="@{/dashboard/benefits}"
+            th:classappend="${requestURI == '/dashboard/benefits' ? 'active' : ''}">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-gifts text-success text-sm opacity-10 pb-1"></i>
+              <i class="fas fa-gift text-success text-sm opacity-10 pb-1"></i>
             </div>
             <span class="nav-link-text ms-1">Beneficios</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/dashboard/coupons}"
+            th:classappend="${requestURI == '/dashboard/coupons' ? 'active' : ''}">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-ticket-alt text-success text-sm opacity-10 pb-1"></i>
+            </div>
+            <span class="nav-link-text ms-1">Cupones</span>
+          </a>
+        </li>
+        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERARIO')">
+          <a class="nav-link" th:href="@{/dashboard/scan}"
+            th:classappend="${requestURI == '/dashboard/scan' ? 'active' : ''}">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-camera text-success text-sm opacity-10 pb-1"></i>
+            </div>
+            <span class="nav-link-text ms-1">Escanear</span>
           </a>
         </li>
       </ul>
@@ -46,9 +67,19 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6">
           <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
-          <li class="breadcrumb-item text-sm text-white active" aria-current="page">Inicio</li>
+          <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
+            th:if="${requestURI == '/dashboard'}">Inicio</li>
+          <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
+            th:if="${requestURI == '/dashboard/benefits'}">Beneficios</li>
+          <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
+            th:if="${requestURI == '/dashboard/coupons'}">Cupones</li>
+          <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
+            th:if="${requestURI == '/dashboard/scan'}">Escanear</li>
         </ol>
-        <h6 class="font-weight-bolder text-white mb-0">Inicio</h6>
+        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard'}">Inicio</h6>
+        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard/benefits'}">Beneficios</h6>
+        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard/coupons'}">Cupones</h6>
+        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard/scan'}">Escanear</h6>
       </nav>
       <div class="collapse navbar-collapse me-md-0 me-sm-4 justify-content-end align-items-center" id="navbar">
         <ul class="navbar-nav justify-content-end gap-2">
@@ -86,7 +117,7 @@
                 <hr class="horizontal mx-3 my-1 dark">
               </li>
               <li>
-                <a class="dropdown-item d-flex gap-2 align-items-center " th:href="@{logout}">
+                <a class="dropdown-item d-flex gap-2 align-items-center " th:href="@{/logout}">
                   <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                 </a>
               </li>
@@ -100,20 +131,10 @@
   <!-- User QR Modal -->
   <div class="modal fade" id="userQrModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered me-auto ms-auto" style="width: fit-content;" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tu Codigo Personal</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
         <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn bg-gradient-primary">Save changes</button>
+          <img th:src="@{${'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + email}}">
         </div>
       </div>
     </div>

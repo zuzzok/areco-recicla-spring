@@ -14,13 +14,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "genero")
-public class Genero extends BaseEntity {
+@Table(name = "categoria_beneficio")
+public class CategoriaBeneficio extends BaseEntity {
 
   @Column(name = "nombre", nullable = false)
   private String nombre;
 
-  @OneToMany(mappedBy = "genero")
-  private List<Usuario> usuarios;
+  @OneToMany(mappedBy = "categoriaBeneficio")
+  private List<Beneficio> beneficios;
 
 }

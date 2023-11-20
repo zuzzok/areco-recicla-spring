@@ -33,7 +33,7 @@
                   <p class="mb-0 text-sm">Accede a tu cuenta con tus credenciales</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" th:action="@{login}" method="post">
+                  <form role="form" th:action="@{/login}" method="post">
                     <div class="mb-3">
                       <input type="email" id="username" name="username" class="form-control form-control-lg"
                         placeholder="Email" aria-label="Email">
@@ -54,7 +54,7 @@
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
                     ¿No tienes cuenta?
-                    <a th:href="@{register}" class="text-success text-gradient font-weight-bold">Regístrate</a>
+                    <a th:href="@{/register}" class="text-success text-gradient font-weight-bold">Regístrate</a>
                   </p>
                 </div>
               </div>

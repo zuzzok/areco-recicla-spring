@@ -6,11 +6,151 @@
 </head>
 
 <body>
-  <section>
-    <!-- Content Here -->
+  <section class="container-fluid py-4 pb-2 mb-4">
+    <article class="card tab-pane active" id="recyclable">
+      <div class="card-header pb-2">
+        <h2 class="card-title mb-3">Beneficios</h2>
+        <p class="card-description m-0">
+          ¡Bienvenido a nuestro programa de recompensas! Canjea tus puntos acumulados por emocionantes beneficios y
+          disfruta de experiencias exclusivas mientras te premiamos por tu contribucion a un planeta ecológico.
+        </p>
+      </div>
+      <div class="card-body row">
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <tbody>
+                <hr class="horizontal dark mt-0 mb-3" th:if="${benefitsPage.isEmpty()}">
+                <div class="d-flex justify-content-center align-items-center" th:if="${benefitsPage.isEmpty()}">
+                  <p class="text-uppercase text-sm">Aún no hay beneficios</p>
+                </div>
+                <hr class="horizontal dark mt-0 mb-2" th:if="${benefitsPage.isEmpty()}">
+
+                <tr th:each="benefit : ${benefitsPage}">
+                  <td class="col-8">
+                    <div class="d-flex gap-4 px-3 py-1 justify-content-start align-items-center">
+                      <div>
+                        <img th:src="@{${benefit.imagen}}" class="avatar" alt="image">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm" th:text="${benefit.nombre}"></h6>
+                        <p class="mb-0 text-xs text-secondary" th:text="${benefit.descripcion}"></p>
+                        <div class="d-flex gap-1 mt-2" th:switch="${benefit.categoriaBeneficio.nombre}">
+                          <span class="badge px-2 py-2 bg-success text-truncate" th:case="'Productos'">
+                            <i class="fas fa-recycle me-1"></i>
+                            <span th:text="${benefit.categoriaBeneficio.nombre}"></span>
+                          </span>
+                          <span class="badge px-2 py-2 bg-primary text-truncate" th:case="'Estacionamiento'">
+                            <i class="fas fa-car me-1"></i>
+                            <span th:text="${benefit.categoriaBeneficio.nombre}"></span>
+                          </span>
+                          <span class="badge px-2 py-2 bg-secondary text-truncate" th:case="'Entretenimiento'">
+                            <i class="fas fa-video me-1"></i>
+                            <span th:text="${benefit.categoriaBeneficio.nombre}"></span>
+                          </span>
+                          <span class="badge px-2 py-2 bg-danger text-truncate" th:case="'Descuentos'">
+                            <i class="fas fa-tag me-1"></i>
+                            <span th:text="${benefit.categoriaBeneficio.nombre}"></span>
+                          </span>
+                          <span class="badge px-2 py-2 bg-warning text-truncate" th:case="'Comidas'">
+                            <i class="fas fa-utensils me-1"></i>
+                            <span th:text="${benefit.categoriaBeneficio.nombre}"></span>
+                          </span>
+                          <span class="badge px-2 py-2 bg-secondary text-truncate" th:case="*">
+                            <i class="fas fa-asterisk me-1"></i>
+                            <span th:text="${benefit.categoriaBeneficio.nombre}"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="align-middle text-end">
+                    <div class="d-flex px-3 py-1 justify-content-end align-items-center">
+                      <p class="text-sm font-weight-bold mb-0" th:text="${#numbers.formatDecimal(benefit.costo, 0, 2)}">
+                      </p>
+                      <i class="fas fa-coins text-sm ms-1 mt-1 text-success"></i>
+                      <a th:href="@{${'/dashboard/benefits/trade/' + benefit.id}}"
+                        class="btn btn-sm btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-3"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Canjear">
+                        <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer pt-0">
+        <nav class="mt-4" aria-label="Navegacion del Historial de Puntos">
+          <ul class="pagination pagination-success justify-content-center">
+            <li class="page-item" th:classappend="${benefitsPage.first} ? 'disabled' : ''">
+              <a class="page-link" tabindex="-1" th:href="@{?page=0}">
+                <i class="fa fa-angle-double-left"></i>
+                <span class="sr-only">Primera</span>
+              </a>
+            </li>
+            <li class="page-item" th:classappend="${benefitsPage.first} ? 'disabled' : ''">
+              <a class="page-link" th:with="previousPage=${benefitsPage.number - 1}"
+                th:href="@{'?page=' + ${previousPage}}" tabindex="-1">
+                <i class="fa fa-angle-left"></i>
+                <span class="sr-only">Anterior</span>
+              </a>
+            </li>
+            <li class="page-item" th:each="i : ${pageNumbers}"
+              th:classappend="${i == benefitsPage.number + 1} ? 'active' : ''">
+              <a class="page-link" th:with="pageNumber=${i - 1}" th:href="@{'?page=' + ${pageNumber}}" th:text="${i}"
+                th:classappend="${i == benefitsPage.number + 1} ? 'text-white' : ''"></a>
+            </li>
+            <li class="page-item" th:classappend="${benefitsPage.last} ? 'disabled' : ''">
+              <a class="page-link" th:with="nextPage=${benefitsPage.number + 1}" th:href="@{'?page=' + ${nextPage}}"
+                tabindex="-1">
+                <i class="fa fa-angle-right"></i>
+                <span class="sr-only">Siguiente</span>
+              </a>
+            </li>
+            <li class="page-item" th:classappend="${benefitsPage.last} ? 'disabled' : ''">
+              <a class="page-link" tabindex="-1" th:with="lastPage=${benefitsPage.totalPages - 1}"
+                th:href="@{'?page=' + ${lastPage}}">
+                <i class="fa fa-angle-double-right"></i>
+                <span class="sr-only">Ultimo</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </article>
+    <!-- Modals -->
+    <div th:if="${success}" class="modal fade" id="successModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <i class="fas fa-check-circle fa-5x text-success pt-2"></i>
+            <h5 class="modal-title text-uppercase text-success" id="exampleModalLabel">Intercambio Existoso</h5>
+            <p class="text-center" th:text="${success}"></p>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">¡Continuar!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:if="${error}" class="modal fade" id="errorModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <i class="fas fa-exclamation-circle fa-5x text-danger pt-2"></i>
+            <h5 class="modal-title text-uppercase text-danger" id="exampleModalLabel">Puntos Insuficientes</h5>
+            <p class="text-center" th:text="${error}"></p>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">¡Entendido!</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </body>
 
-<script></script>
+<script th:src="@{/js/plugins/modalSuccessError.js}"></script>
 
 </html>

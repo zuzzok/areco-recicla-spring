@@ -1,6 +1,5 @@
 package zuzzok.arecorecicla.controllers;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +58,9 @@ public class AuthController {
       return "auth/register";
     }
 
-    List<Rol> roles = rolRepository.findAll();
+    Rol defaultRol = rolRepository.findByNombre("USUARIO");
 
-    usuario.setRoles(Set.of(roles.get(0)));
+    usuario.setRoles(Set.of(defaultRol));
     service.save(usuario);
 
     return "redirect:/login";
