@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" th:replace="~{layouts/dashboard :: slots(~{::title}, ~{::section}, ~{::script})}">
+
+<head>
+  <title>Areco Recicla | Escanear</title>
+</head>
+
+<body>
+  <section class="container-fluid py-4 pb-2 mb-4">
+    <article class="card" id="recyclable" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERARIO')">
+      <div class="card-header pb-2">
+        <h2 class="card-title h5 d-block text-darker">
+          Cargar Reciclables
+        </h2>
+        <p class="card-description m-0">
+          Ingresa con precisión los datos del vecino al cual deseas realizar la carga de reciclables. Asegúrate de
+          proporcionar información completa y exacta para una contribución eficiente y sostenible.
+        </p>
+      </div>
+      <div class="card-body">
+        <form class="row" th:action="@{/dashboard/addrecyclable}" th:object="${addRecyclableForm}" method="post">
+          <div class="form-group">
+            <label for="email">Email del Vecino</label>
+            <div class="input-group">
+              <input type="email" class="form-control" name="email" id="email" th:errorclass="is-invalid"
+                th:field="*{email}" aria-label="Email" required />
+              <button class="btn btn-success mb-0" id="qr-button" type="button" data-bs-toggle="modal"
+                data-bs-target="#qr-modal" data-qr-target="email">
+                <i class="fas fa-qrcode user-select-none" data-qr-target="email"></i>
+              </button>
+            </div>
+            <span class="form-text text-xs text-danger ml-8" th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"></span>
+          </div>
+          <div class="form-group">
+            <label for="ecopunto">Ecopunto</label>
+            <select class="form-control choices__input select-picker" th:field="*{ecopunto}" name="ecopunto"
+              id="ecopunto" required>
+              <option hidden selected value=""> </option>
+              <option th:each="item : ${ecopuntos}" th:value="${item.id}" th:text="${item.nombre}">
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="kilograms">Kilogramos</label>
+            <div class="input-group">
+              <input type="number" step="0.001" min="0" class="form-control" id="kilograms" name="kilogramos"
+                th:errorclass="is-invalid" th:field="*{kilogramos}" aria-label="kilogramos" required>
+            </div>
+            <span class="form-text text-xs text-danger ml-8" th:if="${#fields.hasErrors('kilogramos')}"
+              th:errors="*{kilogramos}"></span>
+          </div>
+          <div class=" text-center">
+            <button type="submit" class="btn bg-success text-white w-100 my-4 mb-2">Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </article>
+    <!-- QR Modal -->
+    <div class="modal fade" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="qr-reader" class="rounded overflow-hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modals -->
+    <div th:if="${success}" class="modal fade" id="successModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <i class="fas fa-check-circle fa-5x text-success pt-2"></i>
+            <h5 class="modal-title text-success text-uppercase" id="exampleModalLabel">Carga de Reciclables Existosa
+            </h5>
+            <p class="text-center" th:text="${success}"></p>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">¡Continuar!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:if="${error}" class="modal fade" id="errorModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <i class="fas fa-exclamation-circle fa-5x text-danger pt-2"></i>
+            <h5 class="modal-title text-danger text-uppercase" id="exampleModalLabel">Acción No Permitida</h5>
+            <p class="text-center" th:text="${error}"></p>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">¡Entendido!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script th:src="@{/js/plugins/scanner.js}"></script>
+<script th:src="@{/js/plugins/modalSuccessError.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js"></script>
+<script th:src="@{/js/plugins/choices.js}"></script>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" th:replace="~{layouts/dashboard :: slots(~{::title}, ~{::section}, ~{::script})}">
+
+<head>
+  <title>Areco Recicla | Escanear</title>
+</head>
+
+<body>
+  <section class="container-fluid py-4 pb-2 mb-4">
+    <article class="card" id="coupon">
+      <div class="card-header pb-2">
+        <h2 class="card-title h5 d-block text-darker">
+          Recibir Cupón
+        </h2>
+        <p class="card-description mb-0">
+          Para escanear el código del cupón, utiliza la cámara de tu dispositivo móvil para enfocar el código del cupón.
+          Una vez que el código esté enfocado, el campo correspondiente se autocompletará con el mismo.
+        </p>
+      </div>
+      <div class="card-body">
+        <form class="row" th:action="@{/dashboard/validatecoupon}" th:object="${validateCouponForm}" method="post">
+          <div class="form-group">
+            <label for="codigo">Codigo del Cupón</label>
+            <div class="input-group">
+              <input type="text" class="form-control" name="codigo" id="codigo" th:errorclass="is-invalid"
+                th:field="*{codigo}" aria-label="Codigo" required />
+              <button class="btn btn-success mb-0" id="qr-button" type="button" data-bs-toggle="modal"
+                data-bs-target="#qr-modal" data-qr-target="codigo">
+                <i class="fas fa-qrcode user-select-none" data-qr-target="codigo"></i>
+              </button>
+            </div>
+            <span class="form-text text-xs text-danger ml-8" th:if="${#fields.hasErrors('codigo')}"
+              th:errors="*{codigo}"></span>
+          </div>
+          <div class=" text-center">
+            <button type="submit" class="btn bg-success text-white w-100 my-4 mb-2">Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </article>
+    <!-- QR Modal -->
+    <div class="modal fade" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="qr-reader" class="rounded overflow-hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modals -->
+    <div th:if="${success}" class="modal fade" id="successModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <i class="fas fa-check-circle fa-5x text-success pt-2"></i>
+            <h5 class="modal-title text-success text-uppercase" id="exampleModalLabel">Validación de Cupón Existosa
+            </h5>
+            <p class="text-center" th:text="${success}"></p>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">¡Continuar!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:if="${error}" class="modal fade" id="errorModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <i class="fas fa-exclamation-circle fa-5x text-danger pt-2"></i>
+            <h5 class="modal-title text-danger text-uppercase" id="exampleModalLabel">Acción No Permitida</h5>
+            <p class="text-center" th:text="${error}"></p>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">¡Entendido!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script th:src="@{/js/plugins/scanner.js}"></script>
+<script th:src="@{/js/plugins/modalSuccessError.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js"></script>
+<script th:src="@{/js/plugins/choices.js}"></script>
+
+</html>

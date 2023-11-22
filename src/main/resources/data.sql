@@ -3,6 +3,7 @@
 INSERT INTO rol (nombre) VALUES ('ADMIN');
 INSERT INTO rol (nombre) VALUES ('OPERARIO');
 INSERT INTO rol (nombre) VALUES ('USUARIO');
+INSERT INTO rol (nombre) VALUES ('COMERCIANTE');
 
 -- Poblamos la tabla genero
 INSERT INTO genero (nombre) VALUES ('Masculino');
@@ -17,7 +18,7 @@ INSERT INTO categoria_beneficio (nombre) VALUES ('Comidas');
 
 -- Poblamos la tabla ecopunto
 INSERT INTO ecopunto (nombre, descripcion) VALUES ('Ecopunto Rivadavia', 'Ecopunto situado en la sede academica rivadavia');
-INSERT INTO ecopunto (nombre, descripcion) VALUES ('Ecopunto Libertad', 'Ecopunto situado en la calle libertad');
+INSERT INTO ecopunto (nombre, descripcion) VALUES ('Ecopunto Guiraldes', 'Ecopunto situado en la calle guiraldes');
 
 -- Poblamos la tabla beneficio
 INSERT INTO beneficio (nombre, descripcion, costo, creado, imagen, categoria_id) VALUES ('Bolsa Ecologica', 'Obten tu bolsa hecha con materiales 100% reciclados', 50.25, '2023-11-16', 'https://www.elsiglodetorreon.com.mx/m/i/2020/04/1297120.jpeg', 1);

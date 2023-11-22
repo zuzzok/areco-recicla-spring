@@ -3,6 +3,7 @@ package zuzzok.arecorecicla.controllers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,7 @@ import zuzzok.arecorecicla.data.repositories.ReciclableRepository;
 import zuzzok.arecorecicla.data.repositories.UsuarioRepository;
 import zuzzok.arecorecicla.data.services.UsuarioService;
 import zuzzok.arecorecicla.data.validators.AddRecyclableForm;
+import zuzzok.arecorecicla.data.validators.ValidateCouponForm;
 
 @Controller
 public class DashboardController {
@@ -137,7 +139,7 @@ public class DashboardController {
                         model.addAttribute("pageNumbers", pageNumbers);
                 }
 
-                return "pages/dashboard/index";
+                return "/pages/dashboard/index";
         }
 
         @GetMapping("/dashboard/benefits")
@@ -166,7 +168,7 @@ public class DashboardController {
                         model.addAttribute("pageNumbers", pageNumbers);
                 }
 
-                return "pages/dashboard/benefits";
+                return "/pages/dashboard/benefits";
         }
 
         @GetMapping("/dashboard/benefits/trade/{id}")
@@ -190,6 +192,7 @@ public class DashboardController {
                         Cupon coupon = new Cupon();
                         coupon.setUsuario(user);
                         coupon.setBeneficio(benefit);
+                        coupon.setValido(true);
 
                         benefitRepository.save(benefit);
                         pointRepository.save(point);
@@ -208,19 +211,28 @@ public class DashboardController {
 
         }
 
-        @GetMapping("/dashboard/scan")
+        @GetMapping("/dashboard/addrecyclable")
         @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO" })
-        public String getScan(Model model, @AuthenticationPrincipal UserAuthenticated authenticated,
+        public String getAddRecyclable(Model model, @AuthenticationPrincipal UserAuthenticated authenticated,
                         AddRecyclableForm addRecyclableForm) {
 
                 model.addAttribute("ecopuntos", ecopointRepository.findAll());
 
-                return "pages/dashboard/scan";
+                return "/pages/dashboard/addrecyclable";
         }
 
-        @PostMapping("/dashboard/scan")
+        @GetMapping("/dashboard/validatecoupon")
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_COMERCIANTE" })
+        public String getValidateCoupon(Model model, @AuthenticationPrincipal UserAuthenticated authenticated,
+                        ValidateCouponForm validateCouponForm) {
+
+                return "/pages/dashboard/validatecoupon";
+        }
+
+        @PostMapping("/dashboard/addrecyclable")
         @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO" })
-        public String postScan(@Valid AddRecyclableForm addRecyclableForm, BindingResult result, Model model,
+        public String postAddRecyclable(@Valid AddRecyclableForm addRecyclableForm,
+                        BindingResult result, Model model,
                         RedirectAttributes redirectAttributes,
                         @AuthenticationPrincipal UserAuthenticated authenticated) {
 
@@ -230,17 +242,17 @@ public class DashboardController {
                 if (user == null) {
                         result.rejectValue("email", "error.usuario.email",
                                         "Intenta con otro email, este no existe en nuestro sistema.");
-                        return "pages/dashboard/scan";
+                        return "/pages/dashboard/addrecyclable";
                 }
 
                 if (user.getId() == authenticated.getId()) {
                         redirectAttributes.addFlashAttribute("error",
                                         "No puedes cargar reciclables a tu propia cuenta.");
-                        return "redirect:/dashboard/scan";
+                        return "redirect:/dashboard/addrecyclable";
                 }
 
                 if (result.hasErrors()) {
-                        return "pages/dashboard/scan";
+                        return "/pages/dashboard/addrecyclable";
                 }
 
                 float cantidad = (float) (addRecyclableForm.getKilogramos() * 1.61803398874988);
@@ -266,7 +278,47 @@ public class DashboardController {
                 redirectAttributes.addFlashAttribute("success",
                                 "Gracias por contribuir al cuidado de nuestro planeta. Tu compromiso con el reciclaje marca la diferencia.");
 
-                return "redirect:/dashboard/scan";
+                return "redirect:/dashboard/addrecyclable";
+        }
+
+        @PostMapping("/dashboard/validatecoupon")
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO" })
+        public String postCouponScan(@Valid ValidateCouponForm validateCouponForm,
+                        BindingResult result, Model model,
+                        RedirectAttributes redirectAttributes,
+                        @AuthenticationPrincipal UserAuthenticated authenticated) {
+
+                Cupon coupon = null;
+
+                try {
+                        coupon = couponRepository.findByCodigo(UUID.fromString(validateCouponForm.getCodigo()));
+                } catch (Exception e) {
+                }
+
+                if (coupon == null) {
+                        result.rejectValue("codigo", "error.cupon.codigo",
+                                        "El código ingresado no pertenece a ningún cupón.");
+                        return "/pages/dashboard/validatecoupon";
+                }
+
+                if (!coupon.isValido()) {
+                        result.rejectValue("codigo", "error.cupon.codigo",
+                                        "El codigo de cupón ingresado ya fue utilizado.");
+                        return "/pages/dashboard/validatecoupon";
+                }
+
+                if (result.hasErrors()) {
+                        return "/pages/dashboard/validatecoupon";
+                }
+
+                coupon.setValido(false);
+                couponRepository.save(coupon);
+
+                redirectAttributes.addFlashAttribute("success",
+                                "Genial! se validó el cupón satisfactoriamente. Por favor otorgale al vecino su beneficio correspondiente: "
+                                                + coupon.getBeneficio().getNombre());
+
+                return "redirect:/dashboard/validatecoupon";
         }
 
         @ModelAttribute("requestURI")

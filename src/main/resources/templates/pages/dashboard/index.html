@@ -200,35 +200,49 @@
         <div class="card card-carousel overflow-hidden h-100 p-0">
           <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
             <div class="carousel-inner border-radius-lg h-100">
-              <div class="carousel-item h-100 active" th:style="'background-image: url(' + @{/img/carousel-1.jpg} + ');
-      background-size: cover;'">
+              <div class="carousel-item h-100 active position-relative" th:style="'background-image: url(' + @{/img/carousel-1.jpg} + ');
+      background-size: cover; background-position: center;'">
+                <span class="mask bg-default opacity-6"></span>
                 <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                   <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                    <i class="ni ni-camera-compact text-dark opacity-10"></i>
+                    <i class="fas fa-recycle text-dark opacity-10"></i>
                   </div>
-                  <h5 class="text-white mb-1">Some Title Here</h5>
-                  <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
+                  <h5 class="text-white text-sm mb-2" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.397);">¿Qué es el
+                    reciclaje?</h5>
+                  <p class="text-xs" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.397);">
+                    El reciclaje es el proceso de convertir los residuos en nuevos materiales que se pueden utilizar. Es
+                    una forma de reducir la cantidad de residuos que enviamos a los vertederos y a la incineración, y de
+                    conservar los recursos naturales.
+                  </p>
                 </div>
               </div>
-              <div class="carousel-item h-100" th:style="'background-image: url(' + @{/img/carousel-2.jpg} + ');
-                background-size: cover;'">
+              <div class="carousel-item h-100 position-relative" th:style="'background-image: url(' + @{/img/carousel-2.jpg} + ');
+                background-size: cover; background-position: center;'">
+                <span class="mask bg-default opacity-6"></span>
                 <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                   <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                    <i class="ni ni-bulb-61 text-dark opacity-10"></i>
+                    <i class="fas fa-globe-americas text-dark opacity-10"></i>
                   </div>
-                  <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                  <p>That’s my skill. I’m not really specifically talented at anything except for the ability to
-                    learn.</p>
+                  <h5 class="text-white text-sm mb-2" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.397);">¿Por qué
+                    reciclar?</h5>
+                  <p class="text-xs" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.397);">El mundo se enfrenta a una
+                    crisis de residuos. Cada año, generamos más de 2 mil millones de toneladas de residuos, y la mayoría
+                    de ellos acaban en los vertederos o en la incineración. El reciclaje es una forma de reducir esta
+                    crisis y proteger el medio ambiente.</p>
                 </div>
               </div>
-              <div class="carousel-item h-100" th:style="'background-image: url(' + @{/img/carousel-3.jpg} + ');
-                background-size: cover;'">
+              <div class="carousel-item h-100 position-relative" th:style="'background-image: url(' + @{/img/carousel-3.jpg} + ');
+                background-size: cover; background-position: center;'">
+                <span class="mask bg-default opacity-6"></span>
                 <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                   <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                    <i class="ni ni-trophy text-dark opacity-10"></i>
+                    <i class="fas fa-dumpster text-dark opacity-10"></i>
                   </div>
-                  <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                  <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
+                  <h5 class="text-white text-sm mb-2" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.397);">¿Qué se
+                    puede reciclar?</h5>
+                  <p class="text-xs" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.397);">Se pueden reciclar muchos
+                    tipos de residuos, entre ellos: papel y cartón, vidrio, plástico, metal, madera, baterías, aceite de
+                    cocina usado.</p>
                 </div>
               </div>
             </div>

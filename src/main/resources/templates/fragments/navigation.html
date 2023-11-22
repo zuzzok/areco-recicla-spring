@@ -13,7 +13,7 @@
       </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse w-fit" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse w-fit" id="sidenav-collapse-main" style="height: fit-content;">
       <ul class="navbar-nav gap-1">
         <li class="nav-item">
           <a class="nav-link" th:href="@{/dashboard}" th:classappend="${requestURI == '/dashboard' ? 'active' : ''}">
@@ -44,14 +44,25 @@
             <span class="nav-link-text ms-1">Cupones</span>
           </a>
         </li>
+        <hr class="horizontal dark mt-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERARIO', 'ROLE_COMERCIANTE')">
         <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERARIO')">
-          <a class="nav-link" th:href="@{/dashboard/scan}"
-            th:classappend="${requestURI == '/dashboard/scan' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/dashboard/addrecyclable}"
+            th:classappend="${requestURI == '/dashboard/addrecyclable' ? 'active' : ''}">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-camera text-success text-sm opacity-10 pb-1"></i>
             </div>
-            <span class="nav-link-text ms-1">Escanear</span>
+            <span class="nav-link-text ms-1">Cargar Reciclable</span>
+          </a>
+        </li>
+        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERARIO', 'ROLE_COMERCIANTE')">
+          <a class="nav-link" th:href="@{/dashboard/validatecoupon}"
+            th:classappend="${requestURI == '/dashboard/validatecoupon' ? 'active' : ''}">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-camera text-success text-sm opacity-10 pb-1"></i>
+            </div>
+            <span class="nav-link-text ms-1">Recibir Cupón</span>
           </a>
         </li>
       </ul>
@@ -74,12 +85,12 @@
           <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
             th:if="${requestURI == '/dashboard/coupons'}">Cupones</li>
           <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
-            th:if="${requestURI == '/dashboard/scan'}">Escanear</li>
+            th:if="${requestURI == '/dashboard/addrecyclable'}">Cargar
+            Reciclable</li>
+          <li class="breadcrumb-item text-sm text-white active text-capitalize" aria-current="page"
+            th:if="${requestURI == '/dashboard/validatecoupon'}">Recibir
+            Cupón</li>
         </ol>
-        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard'}">Inicio</h6>
-        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard/benefits'}">Beneficios</h6>
-        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard/coupons'}">Cupones</h6>
-        <h6 class="font-weight-bolder text-white mb-0" th:if="${requestURI == '/dashboard/scan'}">Escanear</h6>
       </nav>
       <div class="collapse navbar-collapse me-md-0 me-sm-4 justify-content-end align-items-center" id="navbar">
         <ul class="navbar-nav justify-content-end gap-2">

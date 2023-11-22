@@ -2,6 +2,7 @@ package zuzzok.arecorecicla.data.repositories;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,5 +13,7 @@ public interface CuponRepository extends JpaRepository<Cupon, Long> {
 
   List<Cupon> findByCreadoBetweenAndUsuarioOrderByCreadoDesc(LocalDate startDate, LocalDate endDate,
       Usuario usuario);
+
+  Cupon findByCodigo(UUID codigo);
 
 }

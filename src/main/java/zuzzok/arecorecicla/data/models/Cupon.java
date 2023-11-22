@@ -2,9 +2,12 @@
 package zuzzok.arecorecicla.data.models;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
+import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.UuidGenerator.Style;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +26,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "cupon")
 public class Cupon extends BaseEntity {
+
+  @UuidGenerator(style = Style.RANDOM)
+  @Column(name = "codigo")
+  private UUID codigo = UUID.randomUUID();
 
   @Column(name = "valido", nullable = false, columnDefinition = "boolean default true")
   private boolean valido;
