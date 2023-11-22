@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import zuzzok.arecorecicla.data.models.Cupon;
@@ -15,5 +17,7 @@ public interface CuponRepository extends JpaRepository<Cupon, Long> {
       Usuario usuario);
 
   Cupon findByCodigo(UUID codigo);
+
+  Page<Cupon> findByUsuarioAndValidoTrueOrderByCreadoDesc(Pageable pageable, Usuario usuario);
 
 }

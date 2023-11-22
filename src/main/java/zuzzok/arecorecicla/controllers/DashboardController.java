@@ -64,7 +64,7 @@ public class DashboardController {
         EcopuntoRepository ecopointRepository;
 
         @GetMapping("/dashboard")
-        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO" })
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO", "ROLE_COMERCIANTE" })
         public String dashboard(Model model, @AuthenticationPrincipal UserAuthenticated authenticated,
                         @PageableDefault(page = 0, size = 5) Pageable pageable) {
 
@@ -142,10 +142,40 @@ public class DashboardController {
                 return "/pages/dashboard/index";
         }
 
+        @GetMapping("/dashboard/coupons")
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO", "ROLE_COMERCIANTE" })
+        public String getCoupons(Model model, @AuthenticationPrincipal UserAuthenticated authenticated,
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+
+                Usuario user = userRepository.findById(authenticated.getId()).orElse(null);
+
+                Page<Cupon> pageOfCoupons = couponRepository.findByUsuarioAndValidoTrueOrderByCreadoDesc(
+                                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), user);
+
+                model.addAttribute("couponsPage", pageOfCoupons);
+
+                var totalPages = pageOfCoupons.getTotalPages();
+                var currentPage = pageOfCoupons.getNumber();
+
+                var start = Math.max(1, currentPage);
+                var end = Math.min(currentPage + 3, totalPages);
+
+                if (totalPages > 0) {
+                        List<Integer> pageNumbers = new ArrayList<>();
+                        for (int i = start; i < end; i++) {
+                                pageNumbers.add(i);
+                        }
+
+                        model.addAttribute("pageNumbers", pageNumbers);
+                }
+
+                return "/pages/dashboard/coupons";
+        }
+
         @GetMapping("/dashboard/benefits")
-        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO" })
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO", "ROLE_COMERCIANTE" })
         public String getBenefis(Model model, @AuthenticationPrincipal UserAuthenticated authenticated,
-                        AddRecyclableForm addRecyclableForm, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
 
                 Page<Beneficio> pageOfBenefits = benefitRepository.findByExpiraBeforeOrExpiraNullOrderByCreadoDesc(
                                 LocalDate.now(),
@@ -172,7 +202,7 @@ public class DashboardController {
         }
 
         @GetMapping("/dashboard/benefits/trade/{id}")
-        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO" })
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_USUARIO", "ROLE_COMERCIANTE" })
         public String tradeBenefit(@PathVariable("id") Long id,
                         @AuthenticationPrincipal UserAuthenticated authenticated,
                         RedirectAttributes redirectAttributes) {
@@ -282,7 +312,7 @@ public class DashboardController {
         }
 
         @PostMapping("/dashboard/validatecoupon")
-        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO" })
+        @Secured({ "ROLE_ADMIN", "ROLE_OPERARIO", "ROLE_COMERCIANTE" })
         public String postCouponScan(@Valid ValidateCouponForm validateCouponForm,
                         BindingResult result, Model model,
                         RedirectAttributes redirectAttributes,

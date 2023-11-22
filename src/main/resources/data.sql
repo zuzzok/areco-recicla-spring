@@ -29,8 +29,8 @@ INSERT INTO beneficio (nombre, descripcion, costo, creado, imagen, categoria_id)
 
 
 -- Creamos un usuario
-INSERT INTO usuario (nombre, apellido, email, clave, genero_id, balance) VALUES ('Gino', 'Canestrari', 'canestrari@duck.com', '$2y$10$8EGu/gTv.tmnVD1n.vmFouw556CZcKD9xXHiRE9SJcrkpSNUtAVT6', '1', '100.00');
-INSERT INTO usuario (nombre, apellido, email, clave, genero_id, balance) VALUES ('John', 'Doe', 'jdoe@gmail.com', '$2y$10$8EGu/gTv.tmnVD1n.vmFouw556CZcKD9xXHiRE9SJcrkpSNUtAVT6', '1', '420');
+INSERT INTO usuario (nombre, apellido, email, clave, genero_id, balance) VALUES ('Gino', 'Canestrari', 'canestrari@duck.com', '$2y$10$8EGu/gTv.tmnVD1n.vmFouw556CZcKD9xXHiRE9SJcrkpSNUtAVT6', '1', '178.23');
+INSERT INTO usuario (nombre, apellido, email, clave, genero_id, balance) VALUES ('John', 'Doe', 'jdoe@duck.com', '$2y$10$8EGu/gTv.tmnVD1n.vmFouw556CZcKD9xXHiRE9SJcrkpSNUtAVT6', '1', '320.67');
 
 -- Le asignamos al usuario creado el rol de administrador
 INSERT INTO rol_de_usuario (usuario_id, rol_id) VALUES ('1', '1');
@@ -239,7 +239,3 @@ INSERT INTO punto (creado, cantidad, descripcion, usuario_id, reciclable_id) VAL
 INSERT INTO punto (creado, cantidad, descripcion, usuario_id, reciclable_id) VALUES ('2023-07-08', 11.41, 'leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus', 1, 98);
 INSERT INTO punto (creado, cantidad, descripcion, usuario_id, reciclable_id) VALUES ('2023-04-25', 13.66, 'vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio', 1, 99);
 INSERT INTO punto (creado, cantidad, descripcion, usuario_id, reciclable_id) VALUES ('2023-09-30', 0.88, 'duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor', 1, 100);
-
-INSERT INTO cupon (usuario_id, beneficio_id, creado) VALUES (1, 1, '2023-11-10');
-
-INSERT INTO punto (creado, cantidad, descripcion, usuario_id, beneficio_id) values ('2023-12-23', -25, 'Intercambiaste Puntos', 1, 1);
